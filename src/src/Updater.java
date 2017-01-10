@@ -1,5 +1,7 @@
 package src;
 
+import java.sql.Connection;
+
 import daos.Audience_DAO_Impl;
 import dtos.AudDtoCol_ID_DName;
 import dtos.Audience_DTO;
@@ -29,7 +31,7 @@ public class Updater implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.exit(-1);
-		}
+		}	
 
 		try {
 			ResponseList<User> users = ((UsersResources) twitter).lookupUsers(ad.getIds());
@@ -44,12 +46,16 @@ public class Updater implements Runnable {
 				}
 				aDTO.setDisplayName(user.getScreenName());
 			}
-
+			
+			Connection con = null;
 			for (i = 0; i < ad.size(); i++) {
 				aDTO = ad.getAudDto(i);
-				ai.UpdateAudience(aDTO);
+				if(i < ad.size()-1)
+					con = ai.UpdateAudience(aDTO, con,false);
+				else
+					con = ai.UpdateAudience(aDTO, con,true);
 			}
-			ai.commit();
+
 			notifyAll();
 			System.exit(0);
 		} catch (Exception te) {

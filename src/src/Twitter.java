@@ -1,6 +1,5 @@
 package src;
 
-import java.util.ArrayList;
 import java.util.Vector;
 
 import daos.Audience_DAO_Impl;
@@ -12,8 +11,6 @@ import twitter4j.conf.ConfigurationBuilder;
 import twitterCred.TwitterCred;
 
 public class Twitter {
-
-	private static ArrayList<Runnable> procesos = new ArrayList<Runnable>();
 
 	public static void main(String args[]) throws InterruptedException {
 		Audience_DAO_Impl audTable = null;
@@ -37,20 +34,18 @@ public class Twitter {
 
 		AudDtoCol_ID_DName audDtoCol = new AudDtoCol_ID_DName();
 		int j = 0;
+		
 		for (int i = 0; i < audCollect.size(); i++) {
 			if (i != 0 && (i % 100 == 0)) {
-				if(j== 0 && (j%1) == 0){
+				if(j== 0 && (j%10) == 0){
 					j = 0;
 					proceso = new Updater(audDtoCol, twitter);
-					procesos.add(proceso);
 					Thread t = new Thread(proceso);
-					t.setPriority(Thread.MAX_PRIORITY);
 					t.start();
 					t.join();
 					audDtoCol = new AudDtoCol_ID_DName();
 				}else{
 					proceso = new Updater(audDtoCol, twitter);
-					procesos.add(proceso);
 					new Thread(proceso).start();
 					audDtoCol = new AudDtoCol_ID_DName();
 					j++;
