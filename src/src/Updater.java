@@ -56,7 +56,8 @@ public class Updater implements Runnable {
 					con = ai.UpdateAudience(aDTO, con,true);
 			}
 
-			notifyAll();
+//			notifyAll();
+//			Thread.currentThread().notify();
 			System.exit(0);
 		} catch (Exception te) {
 			te.printStackTrace();

@@ -2,6 +2,7 @@ package conexionDB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -103,7 +104,13 @@ public class ConnectionPool {
 	public synchronized void releaseConnection(Connection con){
 		boolean ok = used.remove(con);
 		if(ok){
-			free.add(con);
+//			free.add(con);
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				throw new RuntimeException("Error close connection");
+			}
 		}else{
 			throw new RuntimeException("Returns an exception that is not mine");
 		}

@@ -37,16 +37,18 @@ public class Twitter {
 		
 		for (int i = 0; i < audCollect.size(); i++) {
 			if (i != 0 && (i % 100 == 0)) {
-				if(j== 0 && (j%10) == 0){
+				if(j!= 0 && (j%10) == 0){
 					j = 0;
 					proceso = new Updater(audDtoCol, twitter);
 					Thread t = new Thread(proceso);
 					t.start();
-					t.join();
+//					t.join();
+					Thread.sleep(100000);
 					audDtoCol = new AudDtoCol_ID_DName();
 				}else{
 					proceso = new Updater(audDtoCol, twitter);
 					new Thread(proceso).start();
+//					proceso.run();
 					audDtoCol = new AudDtoCol_ID_DName();
 					j++;
 				}
