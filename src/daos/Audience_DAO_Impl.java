@@ -10,7 +10,7 @@ public class Audience_DAO_Impl extends Audience_DAO {
 
 	@Override
 	protected String query() {
-		return "SELECT USER_ID FROM AUDIENCE WHERE DISPLAY_NAME = ''";
+		return "SELECT USER_ID FROM AUDIENCE WHERE DISPLAY_NAME = '' ORDER BY USER_ID ASC";
 	}
 
 	@Override

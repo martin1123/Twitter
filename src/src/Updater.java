@@ -58,7 +58,6 @@ public class Updater implements Runnable {
 
 //			notifyAll();
 //			Thread.currentThread().notify();
-			System.exit(0);
 		} catch (Exception te) {
 			te.printStackTrace();
 			System.out.println("Failed to lookup users: " + te.getMessage());

@@ -48,7 +48,6 @@ public class Twitter {
 				}else{
 					proceso = new Updater(audDtoCol, twitter);
 					new Thread(proceso).start();
-//					proceso.run();
 					audDtoCol = new AudDtoCol_ID_DName();
 					j++;
 				}

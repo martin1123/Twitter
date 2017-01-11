@@ -104,13 +104,13 @@ public class ConnectionPool {
 	public synchronized void releaseConnection(Connection con){
 		boolean ok = used.remove(con);
 		if(ok){
-//			free.add(con);
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				throw new RuntimeException("Error close connection");
-			}
+			free.add(con);
+//			try {
+//				con.close();
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				throw new RuntimeException("Error close connection");
+//			}
 		}else{
 			throw new RuntimeException("Returns an exception that is not mine");
 		}
