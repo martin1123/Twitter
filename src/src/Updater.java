@@ -2,7 +2,7 @@ package src;
 
 import java.sql.Connection;
 
-import daos.Audience_DAO_Impl;
+import daos.Audience_DAO;
 import dtos.AudDtoCol_ID_DName;
 import dtos.Audience_DTO;
 import factory.Ufactory;
@@ -23,10 +23,10 @@ public class Updater implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		Audience_DAO_Impl ai = null;
+		Audience_DAO ai = null;
 
 		try {
-			ai = (Audience_DAO_Impl) Ufactory.getInstance("AUCIENCE_IDS");
+			ai = (Audience_DAO) Ufactory.getInstance("AUCIENCE_IDS");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,7 +44,12 @@ public class Updater implements Runnable {
 					System.out.println("No se encontro usuario");
 					break;
 				}
-				aDTO.setDisplayName(user.getScreenName());
+				aDTO.setDisplayName(user.getName());
+				aDTO.setPreferredUserName(user.getScreenName());
+				aDTO.setFriendsCount(user.getFriendsCount());
+				aDTO.setFollowersCount(user.getFollowersCount());
+				aDTO.setStatusesCount(user.getStatusesCount());
+				aDTO.setIsVerified((byte)((user.isVerified())?1:0));
 			}
 			
 			Connection con = null;
@@ -61,7 +66,8 @@ public class Updater implements Runnable {
 		} catch (Exception te) {
 			te.printStackTrace();
 			System.out.println("Failed to lookup users: " + te.getMessage());
-			System.exit(-1);
+			System.out.println(ad.toString());
+//			System.exit(-1);
 		}
 	}
 }
