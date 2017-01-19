@@ -1,6 +1,7 @@
 package dtos;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Audience_DTO {
 	
@@ -15,6 +16,8 @@ public class Audience_DTO {
 	private int followersCount;
 	private byte isParent;
 	private byte isVerified;
+	private String location;
+	private Timestamp ts;
 	
 
 	public Audience_DTO(String userId) {
@@ -104,6 +107,22 @@ public class Audience_DTO {
 	}
 	public void setIsVerified(byte isVerified) {
 		this.isVerified = isVerified;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Timestamp getTimeStamp() {
+		return ts;
+	}
+
+	public void setTimeStamp(Timestamp ts) {
+		this.ts = ts;
 	}
 	
 	

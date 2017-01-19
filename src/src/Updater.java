@@ -1,6 +1,7 @@
 package src;
 
 import java.sql.Connection;
+import java.sql.Timestamp;
 
 import daos.Audience_DAO;
 import dtos.AudDtoCol_ID_DName;
@@ -24,6 +25,7 @@ public class Updater implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		Audience_DAO ai = null;
+		Timestamp timestamp = null;
 
 		try {
 			ai = (Audience_DAO) Ufactory.getInstance("AUCIENCE_IDS");
@@ -44,12 +46,15 @@ public class Updater implements Runnable {
 					System.out.println("No se encontro usuario");
 					break;
 				}
+				timestamp = new Timestamp(System.currentTimeMillis());
+				aDTO.setTimeStamp(timestamp);
 				aDTO.setDisplayName(user.getName());
 				aDTO.setPreferredUserName(user.getScreenName());
 				aDTO.setFriendsCount(user.getFriendsCount());
 				aDTO.setFollowersCount(user.getFollowersCount());
 				aDTO.setStatusesCount(user.getStatusesCount());
 				aDTO.setIsVerified((byte)((user.isVerified())?1:0));
+				aDTO.setLocation(user.getLocation());
 			}
 			
 			Connection con = null;

@@ -10,7 +10,8 @@ public class Audience_DAO_Impl extends Audience_DAO {
 
 	@Override
 	protected String query() {
-		return "SELECT USER_ID FROM AUDIENCE WHERE DISPLAY_NAME = '' ORDER BY USER_ID ASC";
+//		return "SELECT USER_ID FROM AUDIENCE WHERE DISPLAY_NAME = '' ORDER BY USER_ID ASC";
+		return "SELECT USER_ID FROM AUDIENCE";
 	}
 
 	@Override
@@ -32,7 +33,9 @@ public class Audience_DAO_Impl extends Audience_DAO {
 					 "STATUSES_COUNT = ?," + 
 					 "FRIENDS_COUNT = ?," + 
 					 "FOLLOWERS_COUNT = ?," + 
-					 "IS_VERIFIED = ? " + 
+					 "IS_VERIFIED = ? ," + 
+					 "USER_LOCATION = ? ," + 
+					 "UPDATE_TIME = ? " + 
 					 "WHERE USER_ID = ?";
 		return sql;
 	}
@@ -50,7 +53,9 @@ public class Audience_DAO_Impl extends Audience_DAO {
 		pstm.setString(4, String.valueOf(audDto.getFriendsCount()));
 		pstm.setString(5, String.valueOf(audDto.getFollowersCount()));
 		pstm.setString(6, String.valueOf(audDto.getIsVerified()));
-		pstm.setString(7, audDto.getUserId());
+		pstm.setString(7, audDto.getLocation());
+		pstm.setTimestamp(8, audDto.getTimeStamp());
+		pstm.setString(9, audDto.getUserId());
 	}
 
 }

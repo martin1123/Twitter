@@ -91,7 +91,9 @@ public class ConnectionPool {
 			Connection con;
 			
 			for(int i = 0; i < n; i++){
-				con = DriverManager.getConnection(url+"://"+host+":"+port+"/"+sid+"?useUnicode=yes&characterEncoding=UTF-8", user, pass);
+				con = DriverManager.getConnection(url+"://"+host+":"+port+"/"+sid+"?useUnicode=yes", user, pass);
+//				con = DriverManager.getConnection(url+"://"+host+":"+port+"/"+sid+"?useUnicode=yes&characterEncoding=UTF-8", user, pass);
+//				con = DriverManager.getConnection(url+"://"+host+":"+port+"/"+sid, user, pass);
 				con.setAutoCommit(false);
 				free.add(con);
 			}
