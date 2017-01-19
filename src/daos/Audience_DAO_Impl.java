@@ -27,7 +27,13 @@ public class Audience_DAO_Impl extends Audience_DAO {
 	
 	@Override
 	protected String queryUpd() {
-		String sql = "UPDATE AUDIENCE SET DISPLAY_NAME = ? WHERE USER_ID = ?";
+		String sql = "UPDATE AUDIENCE SET DISPLAY_NAME = ?," + 
+					 "PREFERRED_USERNAME = ?," + 
+					 "STATUSES_COUNT = ?," + 
+					 "FRIENDS_COUNT = ?," + 
+					 "FOLLOWERS_COUNT = ?," + 
+					 "IS_VERIFIED = ? " + 
+					 "WHERE USER_ID = ?";
 		return sql;
 	}
 	
@@ -39,7 +45,12 @@ public class Audience_DAO_Impl extends Audience_DAO {
 	@Override
 	protected void setValuesUpd(Audience_DTO audDto, PreparedStatement pstm) throws SQLException {
 		pstm.setString(1, audDto.getDisplayName());
-		pstm.setString(2, audDto.getUserId());
+		pstm.setString(2, audDto.getPreferredUserName());
+		pstm.setString(3, String.valueOf(audDto.getStatusesCount()));
+		pstm.setString(4, String.valueOf(audDto.getFriendsCount()));
+		pstm.setString(5, String.valueOf(audDto.getFollowersCount()));
+		pstm.setString(6, String.valueOf(audDto.getIsVerified()));
+		pstm.setString(7, audDto.getUserId());
 	}
 
 }
