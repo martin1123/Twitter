@@ -13,5 +13,13 @@ public class AudDtoCol_ID_DName extends AudDtoCollect{
 		
 		return lista;
 	}
+	
+	public String toString(){
+		String ret = new String();
+		for(Audience_DTO a :ad ){
+			ret += a.getUserId() + ", ";
+		}
+		return ret;
+	}
 
 }
