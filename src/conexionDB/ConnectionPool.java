@@ -91,7 +91,7 @@ public class ConnectionPool {
 			Connection con;
 			
 			for(int i = 0; i < n; i++){
-				con = DriverManager.getConnection(url+"://"+host+":"+port+"/"+sid, user, pass);
+				con = DriverManager.getConnection(url+"://"+host+":"+port+"/"+sid+"?useUnicode=yes&characterEncoding=UTF-8", user, pass);
 				con.setAutoCommit(false);
 				free.add(con);
 			}
@@ -104,13 +104,13 @@ public class ConnectionPool {
 	public synchronized void releaseConnection(Connection con){
 		boolean ok = used.remove(con);
 		if(ok){
-			free.add(con);
-//			try {
-//				con.close();
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				throw new RuntimeException("Error close connection");
-//			}
+//			free.add(con);
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				throw new RuntimeException("Error close connection");
+			}
 		}else{
 			throw new RuntimeException("Returns an exception that is not mine");
 		}
