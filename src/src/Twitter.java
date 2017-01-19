@@ -33,24 +33,12 @@ public class Twitter {
 			return;
 
 		AudDtoCol_ID_DName audDtoCol = new AudDtoCol_ID_DName();
-		int j = 0;
 		
 		for (int i = 0; i < audCollect.size(); i++) {
 			if (i != 0 && (i % 100 == 0)) {
-				if(j!= 0 && (j%10) == 0){
-					j = 0;
-					proceso = new Updater(audDtoCol, twitter);
-					Thread t = new Thread(proceso);
-					t.start();
-//					t.join();
-					Thread.sleep(100000);
-					audDtoCol = new AudDtoCol_ID_DName();
-				}else{
-					proceso = new Updater(audDtoCol, twitter);
-					new Thread(proceso).start();
-					audDtoCol = new AudDtoCol_ID_DName();
-					j++;
-				}
+				proceso = new Updater(audDtoCol, twitter);
+				new Thread(proceso).run();
+				audDtoCol = new AudDtoCol_ID_DName();
 			} else {
 				audDtoCol.addAudDto(audCollect.get(i));
 			}
@@ -60,7 +48,7 @@ public class Twitter {
 		if (audDtoCol.size() > 0) {
 			proceso = new Updater(audDtoCol, twitter);
 			Thread taux = new Thread(proceso);
-			taux.start();
+			taux.run();
 		}
 	}
 
