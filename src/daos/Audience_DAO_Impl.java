@@ -6,6 +6,17 @@ import java.sql.SQLException;
 
 import dtos.Audience_DTO;
 
+/**
+*
+* Clase que implementa los metodos abstractos de la clase Audience_DAO.
+* En esat clase se definen las querys y sus filtros, como asi tambien los updates
+* con los valores a actualizar.
+*
+* @author: Martin Maccio
+*
+* @version: 1.0.0
+*
+*/
 public class Audience_DAO_Impl extends Audience_DAO {
 
 	@Override

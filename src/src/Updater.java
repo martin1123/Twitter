@@ -11,6 +11,17 @@ import twitter4j.ResponseList;
 import twitter4j.User;
 import twitter4j.api.UsersResources;
 
+
+/**
+*
+* Clase que se encarga de realizar la parte correspondiente a la busqueda de informacion de 100 usuarios
+* y actualizar sus datos en la tabla AUDIENCE de bluemix. 
+*
+* @author: Martin Maccio
+*
+* @version: 1.0.0
+*
+*/
 public class Updater implements Runnable {
 
 	AudDtoCol_ID_DName ad;
@@ -36,10 +47,14 @@ public class Updater implements Runnable {
 		}	
 
 		try {
+			//Se obtiene la informacion de los uids
 			ResponseList<User> users = ((UsersResources) twitter).lookupUsers(ad.getIds());
 			int i;
 			Audience_DTO aDTO;
 
+			//Por cada usuario que se haya encontrado resultados se setean los valores
+			//recuperados.
+			//En caso de no encontrarse algun valor para el usuario, no se seteara ningun valor.
 			for (User user : users) {
 				aDTO = ad.getAudDtoPerId(String.valueOf(user.getId()));
 				if(aDTO == null){
@@ -60,9 +75,13 @@ public class Updater implements Runnable {
 			Connection con = null;
 			for (i = 0; i < ad.size(); i++) {
 				aDTO = ad.getAudDto(i);
+				//Cuando se llegue al ultimo eleento se actualiza el ultimo registro
+				//Y se realiza un commit.
 				if(i < ad.size()-1)
+					//Se actualiza tabla sin commitear
 					con = ai.UpdateAudience(aDTO, con,false);
 				else
+					//Se actualiza y se commitea
 					con = ai.UpdateAudience(aDTO, con,true);
 			}
 

@@ -6,11 +6,23 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
+/**
+*
+* Clase que se encarga de manejar el pool de conexiones a la base de datos de Bluemix.
+* 
+* Su principal motivo es para que se puedan compartir las conexiones entre los distintos
+* threads de la aplicacion.
+*
+* @author: Martin Maccio
+*
+* @version: 1.0.0
+*
+*/
 public class ConnectionPool {
 	private Vector<Connection> free;
 	private Vector<Connection> used;
 	
-	/*Connection data*/
+	/*Datos de la conexion*/
 	private String user;
 	private String pass;
 	private String host;
@@ -19,12 +31,13 @@ public class ConnectionPool {
 	private String driver;
 	private String url;
 	
-	/*Pool min size and max size*/
+	/*Atributos del Pool*/
 	private int minSize;
 	private int maxSize;
 	private int steep;
 	
-	//Only instance. Singleton Pattern
+	/*Instancia del pool de conexiones. Se aplica patron singleton para manejar
+	 * siempre el mismo pool de conexiones*/
 	private static ConnectionPool pool = null;
 	
 	/*Constructor*/
@@ -55,7 +68,7 @@ public class ConnectionPool {
 		}
 	}
 	
-	/*Get Pool with singleton pattern*/
+	/*Metodo para obtener el pool de conexiones*/
 	public synchronized static ConnectionPool getPool(){
 		if(pool == null){
 			pool = new ConnectionPool();
@@ -63,8 +76,10 @@ public class ConnectionPool {
 		return pool;
 	}
 	
-	
+	/*Metodo para obtener una conexion del pool de conexiones*/
 	public synchronized Connection getConnection(){
+		//Si no hay ninguna conexion libre se crea una n conexiones segun lo indicado
+		//en el atributo steep
 		if(free.size() == 0){
 			if(!_createMoreConnections()){
 				throw new RuntimeException ("No more connections available");
@@ -75,6 +90,7 @@ public class ConnectionPool {
 		return con;
 	}
 	
+	/*Metodo que se utiliza para crear nuevas conexiones*/
 	private boolean _createMoreConnections(){
 		int current = free.size() + used.size();
 		int n = Math.min(maxSize - current, steep);
@@ -86,14 +102,13 @@ public class ConnectionPool {
 		return n>0;
 	}
 	
+	/*Metodo para instanciar n conexiones a la base de datos*/
 	private void _instance(int n){
 		try{
 			Connection con;
 			
 			for(int i = 0; i < n; i++){
 				con = DriverManager.getConnection(url+"://"+host+":"+port+"/"+sid+"?useUnicode=yes", user, pass);
-//				con = DriverManager.getConnection(url+"://"+host+":"+port+"/"+sid+"?useUnicode=yes&characterEncoding=UTF-8", user, pass);
-//				con = DriverManager.getConnection(url+"://"+host+":"+port+"/"+sid, user, pass);
 				con.setAutoCommit(false);
 				free.add(con);
 			}
@@ -118,6 +133,7 @@ public class ConnectionPool {
 		}
 	}
 	
+	/*Metodo para cerrar todas las conexiones a la base de datos*/
 	public synchronized void close(){
 		try{
 			for(Connection c : free){
