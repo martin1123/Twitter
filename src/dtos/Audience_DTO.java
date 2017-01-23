@@ -3,6 +3,12 @@ package dtos;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+/**
+ * Data Transfer Object de la tabla Audience. Cada atributo representa una columna de
+ * la tabla AUDIENCE.
+ * @author mmaccio
+ *
+ */
 public class Audience_DTO {
 	
 	private int socialNetworkId;
