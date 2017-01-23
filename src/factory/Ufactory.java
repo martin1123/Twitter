@@ -2,6 +2,12 @@ package factory;
 
 import java.util.ResourceBundle;
 
+/**
+ * Factoría de objetos. Retorna instancias del objeto indicado en el archivo
+ * factory.properties
+ * @author mmaccio
+ *
+ */
 public class Ufactory {
 	private static Object obj = null;
 	
