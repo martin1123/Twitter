@@ -21,8 +21,8 @@ public class Audience_DAO_Impl extends Audience_DAO {
 
 	@Override
 	protected String query() {
-		return "SELECT USER_ID FROM AUDIENCE WHERE UPDATE_TIME = 0 ORDER BY USER_ID ASC";
-//		return "SELECT USER_ID FROM AUDIENCE";
+//		return "SELECT USER_ID FROM AUDIENCE WHERE UPDATE_TIME = 0 ORDER BY USER_ID ASC";
+		return "SELECT USER_ID FROM AUDIENCE";
 	}
 
 	@Override

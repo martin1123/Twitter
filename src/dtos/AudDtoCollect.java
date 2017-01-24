@@ -2,7 +2,7 @@ package dtos;
 
 import java.util.ArrayList;
 
-public abstract class AudDtoCollect {
+public class AudDtoCollect {
 	
 	protected ArrayList<Audience_DTO> ad = new ArrayList<Audience_DTO>();
 	
