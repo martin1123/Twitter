@@ -16,15 +16,26 @@ import twitter4j.conf.ConfigurationBuilder;
 * se recupera desde la API de Twitter la información de cada usuario asociado.
 * Finalmente con la información recuperada de Twitter se actualiza la tabla AUDIENCE.
 *
+* Archivos de configuracion:
+* 
+* /src/connectionTwitterApi/twitterConn.properties: Archivo de credenciales para conectar a la APi de Twitter.
+* 
+* /src/conexionDB/jdbc.properties: Archivo para la configuracion de la base de datos.
+* 
+* /src/factory/factory.properties: Archivo que indica la clase a utilizar para mappear la tabla AUDIENCE 
+*                                  de la base de datos.
+* 
+* 
 * Nota: El programa fue originalmente pensado para soportar Multithreading, pero como la base de datos
-* no soportaba multiples updates, se tuvo que llamar al metodo run de la clase Updater para correr un solo thread. 
+* no soportaba multiples updates, se tuvo que llamar al metodo run de la clase Updater para correr un solo thread
+* para realizar la menor cantidad de modificaciones posibles. 
 * Sin embargo, con minimos cambios que a continuacion se especifican, puede hacerse un programa
-* que soporte multithreading para que se actualicen varios registros concurrentemente y asi reducir
+* que soporte multithreading para que se actualicen varios registros en paralelo y asi reducir
 * consirablemente la duracion del programa, siempre y cuando la base de datos lo permita.
 * 
 * Consideraciones para multithreading:
 * 
-* 1) En el main, en vez de invocar al metodo run directamente, se debe invocar al metodo start
+* 1) En el main, en vez de invocar al metodo run de la clase Thread, se debe invocar al metodo start
 *    para que comience un thread paralelo de ejecucion. 
 *    
 * 2) Tener en cuenta de limitar la cantidad de Threads que se ejecuten en paralelo.
