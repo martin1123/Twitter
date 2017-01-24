@@ -39,6 +39,8 @@ public class Updater implements Runnable {
 		Timestamp timestamp = null;
 
 		try {
+			/* A traves de un factory method se obtiene una instancia de la clase
+			 * que representa a la tabla de AUDIENCIA*/
 			ai = (Audience_DAO) Ufactory.getInstance("AUCIENCE_IDS");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -47,7 +49,8 @@ public class Updater implements Runnable {
 		}	
 
 		try {
-			//Se obtiene la informacion de los uids
+			/* Se envian los uids a la API de Twitter y se obtiene la informacion de cada
+			 * usuario asociado*/
 			ResponseList<User> users = ((UsersResources) twitter).lookupUsers(ad.getIds());
 			int i;
 			Audience_DTO aDTO;
@@ -56,6 +59,8 @@ public class Updater implements Runnable {
 			//recuperados.
 			//En caso de no encontrarse algun valor para el usuario, no se seteara ningun valor.
 			for (User user : users) {
+				/* Se verifica el DTO correspondiente al Usuario para actualizar los valores
+				 * En la base de datos.*/
 				aDTO = ad.getAudDtoPerId(String.valueOf(user.getId()));
 				if(aDTO == null){
 					System.out.println("No se encontro usuario");

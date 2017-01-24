@@ -74,17 +74,23 @@ public class Twitter {
 		// Conexion a la api de twitter
 		twitter4j.Twitter twitter = connectTwitter();
 
-		// Buscar audiencia en base de datos
+		// Busca audiencia en base de datos y guarda la misma en una coleccion
 		audCollect = searchAudience(audTable);
 
+		//Si no se recupera ningun dato de la tabla se finaliza el programa
 		if (audCollect == null)
 			return;
 
 		AudDtoCol_ID_DName audDtoCol = new AudDtoCol_ID_DName();
 		
+		/* Cada 100 uids, se lanza un Thread que va a enviar un request a la API de Twitter
+		 * con esos uids, y una vez obtenida la informacion asociada a cada uid, se actualizara
+		 * la tabla AUDIENCE.*/
 		for (int i = 0; i < audCollect.size(); i++) {
 			if (i != 0 && (i % 100 == 0)) {
+				//Si se llego a acumular 100 uids lanza un Thread
 				proceso = new Updater(audDtoCol, twitter);
+//				new Thread(proceso).start();
 				new Thread(proceso).run();
 				audDtoCol = new AudDtoCol_ID_DName();
 			} else {
@@ -93,6 +99,7 @@ public class Twitter {
 
 		}
 
+		/*Se pregunta si quedaron UIDs por procesar y se lanza un ultimo Thread para procesarlos*/
 		if (audDtoCol.size() > 0) {
 			proceso = new Updater(audDtoCol, twitter);
 			Thread taux = new Thread(proceso);
